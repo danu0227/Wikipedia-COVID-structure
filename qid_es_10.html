@@ -1,0 +1,216 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+        #loadingBar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width: 100%;
+            height: 100%;
+            background-color:rgba(200,200,200,0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+
+        #bar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:20px;
+            height:20px;
+            margin:auto auto auto auto;
+            border-radius:11px;
+            border:2px solid rgba(30,30,30,0.05);
+            background: rgb(0, 173, 246); /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+        }
+
+        #border {
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:23px;
+            margin:auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+            border-radius:10px;
+        }
+
+        #text {
+            position:absolute;
+            top:8px;
+            left:530px;
+            width:30px;
+            height:50px;
+            margin:auto auto auto auto;
+            font-size:22px;
+            color: #000000;
+        }
+
+        div.outerBorder {
+            position:relative;
+            top:400px;
+            width:600px;
+            height:44px;
+            margin:auto auto auto auto;
+            border:8px solid rgba(0,0,0,0.1);
+            background: rgb(252,252,252); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+            border-radius:72px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+<div id="loadingBar">
+    <div class="outerBorder">
+        <div id="text">0%</div>
+        <div id="border">
+            <div id="bar"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#dd4b39", "id": "Q82069695", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q81068910", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q84263196", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87866152", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q98456223", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87719492", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q552461", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q30314010", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85872065", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86901049", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83741704", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84081307", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Lista de eventos afectados por la pandemia de coronavirus 2019-20", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86077067", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q591903", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7314462", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q865", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q82972", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Chinese Nationalist Party retreat to Taiwan", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q706243", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q22528", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3044828", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q16165653", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q28412430", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q13426199", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q707908", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2390617", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q378008", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q50218", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q712602", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7462", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q201727", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q35216", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q169705", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q862552", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q9903", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7183", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7405", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q128938", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7209", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q932396", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q185063", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q683551", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7313", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q8733", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q185047", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q49696", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q9683", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q185043", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7352", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q242115", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q36778", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q715278", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q727694", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q198269", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Taiwan\u00e9s mandar\u00edn", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Hakka taiwan\u00e9s", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Romanizaci\u00f3n del idioma chino en Taiw\u00e1n", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Lengua de se\u00f1as taiwanesa", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q747986", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q112501", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q190517", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4505775", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1206988", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2303916", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1151593", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q179975", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1073476", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q170314", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q175379", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1083391", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1201263", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q31113", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q11077566", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2357324", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q8690", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q985716", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1205521", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1799880", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7634459", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q185802", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3110177", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q58715", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q10927676", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q517371", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2215032", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q99717", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2454958", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1156482", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q8663", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1204909", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1057935", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1195031", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2225003", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q706447", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q32081", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2367508", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q63698", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83020", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q713146", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q499073", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q705296", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2986801", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1482612", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7408", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q456012", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q9004224", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q253774", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3236984", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q184663", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q133908", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7433670", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q709357", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3782312", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q30917119", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Expediciones norte\u00f1as de Zhuge Liang", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q830059", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q427777", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85530", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Arquitectura de la Dinast\u00eda Song", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Econom\u00eda de la Dinast\u00eda Song", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Cultura de la Dinast\u00eda Song", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3137212", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1153975", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4434077", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1345258", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q74049", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q699446", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q197615", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q137816", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q847618", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2167231", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q32993", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2421268", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2862267", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q483039", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4871937", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q28163788", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q868962", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2427430", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q8250483", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2038907", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q254599", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7427", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4958", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q748", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q9598", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1713721", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q196341", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q79546163", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2681848", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q20646528", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q339291", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1552020", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q340803", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q482979", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q646336", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q42927", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2982106", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q41795401", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q173324", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q185514", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q222516", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q9441", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q193944", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1480392", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q851391", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q897336", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q7055", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q169010", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q225932", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q522046", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q847493", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q134293", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q178149", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q550068", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q207957", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Caminos budistas hacia la liberaci\u00f3n", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q640962", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1207203", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q132196", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1001079", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q10566698", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Masacre en la Isla Lamey", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q5691410", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q697621", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Rebeli\u00f3n de Guo Huaiyi", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Marioneta de guantes", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q172175", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q132265", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q385530", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q48362", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Batalla del Bowling Alley", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Batalla de Masan", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4348916", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Batalla de P\u0027ohang-dong", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "La gran ofensiva de Naktong", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Batalla de Taegu", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Buddhist monasticism", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Representaciones del Buda Gautama en el cine", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Buda Gautama en las religiones del mundo", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1056672", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q556912", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4488886", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q736311", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q812767", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q42417924", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q9228", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q384728", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q749085", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q639625", "label": " ", "shape": "dot", "size": 10, "value": 5}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q98456223", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q87719492", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q552461", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q86901049", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q84081307", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Lista de eventos afectados por la pandemia de coronavirus 2019-20", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83741704", "to": "Q86077067", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84081307", "to": "Q591903", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84081307", "to": "Q7314462", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q591903", "to": "Q865", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q591903", "to": "Q82972", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7314462", "to": "Chinese Nationalist Party retreat to Taiwan", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q706243", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q591903", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q22528", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q3044828", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q16165653", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q28412430", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q13426199", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q707908", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q2390617", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q378008", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q50218", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q865", "to": "Q712602", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q7462", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q201727", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q35216", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q169705", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q862552", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q9903", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q7183", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q7405", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q128938", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q7209", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q932396", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q185063", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q13426199", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q712602", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q683551", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q7313", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q8733", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q185047", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q49696", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q9683", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q185043", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q7352", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82972", "to": "Q242115", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Q36778", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Q715278", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Q727694", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Q198269", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Taiwan\u00e9s mandar\u00edn", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Hakka taiwan\u00e9s", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Romanizaci\u00f3n del idioma chino en Taiw\u00e1n", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2390617", "to": "Lengua de se\u00f1as taiwanesa", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8733", "to": "Q747986", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8733", "to": "Q112501", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8733", "to": "Q190517", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8733", "to": "Q4505775", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q49696", "to": "Q1206988", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q49696", "to": "Q2303916", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q128938", "to": "Q1151593", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q179975", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q1073476", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q170314", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q175379", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q190517", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q1083391", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q1201263", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13426199", "to": "Q31113", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q11077566", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q2357324", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q8690", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q985716", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q1205521", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q1799880", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q7634459", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q185802", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q3110177", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q58715", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q10927676", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q517371", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q2215032", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q99717", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q2454958", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q1156482", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q862552", "to": "Q8663", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q932396", "to": "Q1204909", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q932396", "to": "Q1057935", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q932396", "to": "Q1195031", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q2225003", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q706447", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q32081", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q2367508", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q63698", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q83020", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q713146", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q499073", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q50218", "to": "Q705296", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q185063", "to": "Q2986801", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q1482612", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q7408", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q456012", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q9004224", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q253774", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q3236984", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q184663", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q133908", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9683", "to": "Q7433670", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q378008", "to": "Q709357", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q378008", "to": "Q3782312", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q378008", "to": "Q712602", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q185043", "to": "Q30917119", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q185043", "to": "Expediciones norte\u00f1as de Zhuge Liang", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q185043", "to": "Q830059", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7462", "to": "Q427777", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7462", "to": "Q7408", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7462", "to": "Q85530", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7462", "to": "Arquitectura de la Dinast\u00eda Song", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7462", "to": "Econom\u00eda de la Dinast\u00eda Song", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7462", "to": "Cultura de la Dinast\u00eda Song", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7462", "to": "Q3137212", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2454958", "to": "Q11077566", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2454958", "to": "Q8690", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2454958", "to": "Q1153975", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2454958", "to": "Q1205521", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2454958", "to": "Q2215032", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q747986", "to": "Q4434077", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q30917119", "to": "Q185043", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q175379", "to": "Q1345258", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1204909", "to": "Q932396", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3782312", "to": "Q74049", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3782312", "to": "Q709357", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3782312", "to": "Q699446", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3782312", "to": "Q197615", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3782312", "to": "Q137816", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1482612", "to": "Q847618", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1482612", "to": "Q2167231", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q58715", "to": "Q2454958", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q179975", "to": "Q32993", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q179975", "to": "Q170314", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q179975", "to": "Q2421268", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8663", "to": "Q2862267", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8663", "to": "Q483039", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8663", "to": "Q4871937", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8663", "to": "Q28163788", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1201263", "to": "Q868962", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1201263", "to": "Q1073476", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1201263", "to": "Q2427430", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q427777", "to": "Q8250483", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q170314", "to": "Q2038907", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q170314", "to": "Q254599", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3137212", "to": "Q7427", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3137212", "to": "Q4958", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q184663", "to": "Q748", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q184663", "to": "Q9598", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8690", "to": "Q11077566", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8690", "to": "Q1205521", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8690", "to": "Q1713721", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8690", "to": "Q196341", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8690", "to": "Q79546163", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8690", "to": "Q2681848", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7433670", "to": "Q20646528", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q190517", "to": "Q339291", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q4505775", "to": "Q1552020", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q4505775", "to": "Q340803", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q483039", "to": "Q482979", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q483039", "to": "Q646336", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q42927", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q2982106", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q41795401", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q173324", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q185514", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q222516", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q9441", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q193944", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q1480392", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q851391", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q897336", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q7055", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q169010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q225932", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q522046", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q847493", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q134293", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q178149", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q550068", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q207957", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Caminos budistas hacia la liberaci\u00f3n", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q640962", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q1207203", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q132196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q748", "to": "Q1001079", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2862267", "to": "Q10566698", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q699446", "to": "Masacre en la Isla Lamey", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q699446", "to": "Q5691410", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q699446", "to": "Q697621", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q699446", "to": "Rebeli\u00f3n de Guo Huaiyi", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q137816", "to": "Marioneta de guantes", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q222516", "to": "Q172175", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q222516", "to": "Q132265", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q41795401", "to": "Q385530", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7055", "to": "Q48362", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q7055", "to": "Q132265", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q482979", "to": "Batalla del Bowling Alley", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q482979", "to": "Batalla de Masan", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q482979", "to": "Q4348916", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q482979", "to": "Batalla de P\u0027ohang-dong", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q482979", "to": "La gran ofensiva de Naktong", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q482979", "to": "Batalla de Taegu", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q193944", "to": "Buddhist monasticism", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9441", "to": "Representaciones del Buda Gautama en el cine", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9441", "to": "Buda Gautama en las religiones del mundo", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9441", "to": "Q41795401", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q9441", "to": "Q1001079", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q851391", "to": "Q1056672", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q851391", "to": "Q556912", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q10566698", "to": "Q4488886", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q172175", "to": "Q41795401", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1056672", "to": "Q736311", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1056672", "to": "Q812767", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q556912", "to": "Q42417924", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q556912", "to": "Q9228", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q48362", "to": "Q178149", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q736311", "to": "Q384728", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q736311", "to": "Q749085", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q736311", "to": "Q639625", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+        network.on("stabilizationProgress", function(params) {
+      		document.getElementById('loadingBar').removeAttribute("style");
+	        var maxWidth = 496;
+	        var minWidth = 20;
+	        var widthFactor = params.iterations/params.total;
+	        var width = Math.max(minWidth,maxWidth * widthFactor);
+
+	        document.getElementById('bar').style.width = width + 'px';
+	        document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+	    });
+	    network.once("stabilizationIterationsDone", function() {
+	        document.getElementById('text').innerHTML = '100%';
+	        document.getElementById('bar').style.width = '496px';
+	        document.getElementById('loadingBar').style.opacity = 0;
+	        // really clean the dom element
+	        setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+	    });
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+        #loadingBar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width: 100%;
+            height: 100%;
+            background-color:rgba(200,200,200,0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+
+        #bar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:20px;
+            height:20px;
+            margin:auto auto auto auto;
+            border-radius:11px;
+            border:2px solid rgba(30,30,30,0.05);
+            background: rgb(0, 173, 246); /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+        }
+
+        #border {
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:23px;
+            margin:auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+            border-radius:10px;
+        }
+
+        #text {
+            position:absolute;
+            top:8px;
+            left:530px;
+            width:30px;
+            height:50px;
+            margin:auto auto auto auto;
+            font-size:22px;
+            color: #000000;
+        }
+
+        div.outerBorder {
+            position:relative;
+            top:400px;
+            width:600px;
+            height:44px;
+            margin:auto auto auto auto;
+            border:8px solid rgba(0,0,0,0.1);
+            background: rgb(252,252,252); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+            border-radius:72px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+<div id="loadingBar">
+    <div class="outerBorder">
+        <div id="text">0%</div>
+        <div id="border">
+            <div id="bar"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#dd4b39", "id": "Q82069695", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q84263196", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q81068910", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85872065", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250732", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q94320705", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q6665312", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86717788", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87119811", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87186117", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87480220", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83889294", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84167106", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88599208", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87589123", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87563855", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85876114", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87483673", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83872398", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86948603", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84166704", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87222526", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87473205", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84446340", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87204911", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q92313308", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84081307", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873577", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86756826", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873580", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85173778", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87590993", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87068864", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873593", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250788", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83872291", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q92797113", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87073833", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83872271", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87785296", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250860", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86597685", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84081576", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250803", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q10282403", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87235137", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89288125", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86919406", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84104992", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87719492", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250948", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84055514", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87664046", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87121993", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89480286", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84098939", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87652010", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87186365", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250695", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86847911", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86694873", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87587763", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250819", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q90085156", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250713", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86886544", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86628344", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87191204", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87660365", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87659698", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87193778", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873548", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86597695", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87200954", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89285378", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87666042", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87952372", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87781572", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87766242", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q178275", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89560617", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250930", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87718451", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88263719", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87709900", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89806028", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q91024607", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88157219", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87243915", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87705884", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q17839578", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87343682", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q26256155", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87714704", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88658306", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88568089", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89193856", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87899022", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87976629", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87742085", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88335426", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q90842654", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87662819", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88082639", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88164033", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87665364", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88864587", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89164046", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87742064", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q90416890", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88617000", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q95962352", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87666247", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q94998517", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87665038", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87709973", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88371105", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88027839", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87729500", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87704267", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87651970", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "COVID-19-Pandemie: Chronik der Ausbreitung in Deutschland", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88082809", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87979033", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88082670", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89127366", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q95852425", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88641716", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87770645", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87770827", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87729501", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87745903", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88082534", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87899016", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q834456", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87058723", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88225303", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87162010", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89598747", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q15989108", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q51993", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q5331908", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87742114", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88556836", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q2252352", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89906796", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q92619508", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q95188854", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87657486", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87202921", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87116829", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87706558", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87814953", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q6559409", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89042090", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87477462", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q94648184", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87477841", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87936974", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3553092", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q18162120", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q162272", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q8064876", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q18085856", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q90146873", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q55887234", "label": " ", "shape": "dot", "size": 10, "value": 5}, {"id": "Q217690", "label": " ", "shape": "dot", "size": 10, "value": 5}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q87250732", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q94320705", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q6665312", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q87250732", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q86717788", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87119811", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87186117", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87480220", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84167106", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84167106", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87589123", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87563855", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85876114", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87483673", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872398", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86948603", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84166704", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84166704", "to": "Q87186117", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84166704", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87222526", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87473205", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84446340", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87204911", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q92313308", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84081307", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873577", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q6665312", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86756826", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86756826", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873580", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85173778", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85173778", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85173778", "to": "Q84167106", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85173778", "to": "Q86756826", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85173778", "to": "Q86717788", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87590993", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83889294", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87068864", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873593", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250788", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872291", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q92797113", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q92797113", "to": "Q87073833", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872271", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872271", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87785296", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250860", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86597685", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84081576", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250732", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250803", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q10282403", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87235137", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89288125", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89288125", "to": "Q89288125", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86919406", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84104992", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84104992", "to": "Q87186117", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84104992", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87719492", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87719492", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87719492", "to": "Q87719492", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250948", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84055514", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87664046", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87121993", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89480286", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89480286", "to": "Q10282403", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84098939", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87652010", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87186365", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250695", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86847911", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86694873", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86717788", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87587763", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250819", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q90085156", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q90085156", "to": "Q6665312", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250713", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86886544", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87073833", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87073833", "to": "Q86717788", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86628344", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87191204", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87660365", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87659698", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87193778", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873548", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86597695", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87200954", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89285378", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87666042", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87952372", "to": "Q83873577", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87781572", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87766242", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q178275", "to": "Q6665312", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89560617", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250930", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87718451", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88263719", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87709900", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89806028", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q91024607", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88157219", "to": "Q89288125", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87243915", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87243915", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87705884", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q17839578", "to": "Q89480286", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87343682", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q26256155", "to": "Q89288125", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87714704", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88658306", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88568089", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89193856", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87899022", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87976629", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87742085", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88335426", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q90842654", "to": "Q83872291", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87662819", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88082639", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88164033", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87665364", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88864587", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89164046", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87742064", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q90416890", "to": "Q89288125", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88617000", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q95962352", "to": "Q89288125", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87666247", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q94998517", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87665038", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87709973", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q94320705", "to": "Q89288125", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88599208", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88599208", "to": "Q86717788", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88371105", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88027839", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87729500", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87704267", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87651970", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "COVID-19-Pandemie: Chronik der Ausbreitung in Deutschland", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88082809", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87979033", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88082670", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89127366", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q95852425", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88641716", "to": "Q83873577", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87770645", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87770827", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87729501", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87745903", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88082534", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87899016", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q834456", "to": "Q6665312", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87058723", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88225303", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87162010", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89598747", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q15989108", "to": "Q6665312", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q15989108", "to": "Q51993", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q15989108", "to": "Q5331908", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87742114", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88556836", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q2252352", "to": "Q89480286", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89906796", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q92619508", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q95188854", "to": "Q86847911", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87657486", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87202921", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87116829", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87706558", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87814953", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q6559409", "to": "Q178275", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89042090", "to": "COVID-19-Pandemie: Chronik der Ausbreitung in Deutschland", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q51993", "to": "Q15989108", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q51993", "to": "Q5331908", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87477462", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q5331908", "to": "Q15989108", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q5331908", "to": "Q51993", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q94648184", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87477841", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87936974", "to": "Q88599208", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3553092", "to": "Q15989108", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3553092", "to": "Q51993", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q18162120", "to": "Q3553092", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q162272", "to": "Q5331908", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q8064876", "to": "Q5331908", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q18085856", "to": "Q3553092", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q90146873", "to": "Q89042090", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q55887234", "to": "Q51993", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q55887234", "to": "Q5331908", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q217690", "to": "Q89042090", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+        network.on("stabilizationProgress", function(params) {
+      		document.getElementById('loadingBar').removeAttribute("style");
+	        var maxWidth = 496;
+	        var minWidth = 20;
+	        var widthFactor = params.iterations/params.total;
+	        var width = Math.max(minWidth,maxWidth * widthFactor);
+
+	        document.getElementById('bar').style.width = width + 'px';
+	        document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+	    });
+	    network.once("stabilizationIterationsDone", function() {
+	        document.getElementById('text').innerHTML = '100%';
+	        document.getElementById('bar').style.width = '496px';
+	        document.getElementById('loadingBar').style.opacity = 0;
+	        // really clean the dom element
+	        setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+	    });
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#dd4b39", "id": "Q82069695", "label": "Q82069695", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q84263196", "label": "Q84263196", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q81068910", "label": "Q81068910", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87186117", "label": "Q87186117", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87235177", "label": "Q87235177", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84055415", "label": "Q84055415", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86919406", "label": "Q86919406", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84104992", "label": "Q84104992", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84055514", "label": "Q84055514", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83872398", "label": "Q83872398", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84166704", "label": "Q84166704", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873577", "label": "Q83873577", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86756826", "label": "Q86756826", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83889294", "label": "Q83889294", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250788", "label": "Q87250788", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873593", "label": "Q83873593", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87651995", "label": "Q87651995", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86597695", "label": "Q86597695", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84167106", "label": "Q84167106", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87719492", "label": "Q87719492", "shape": "dot", "size": 10, "value": 5}, {"id": "Q97660562", "label": "Q97660562", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84446340", "label": "Q84446340", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87902950", "label": "Q87902950", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1385195", "label": "Q1385195", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873548", "label": "Q83873548", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84098939", "label": "Q84098939", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87887813", "label": "Q87887813", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873580", "label": "Q83873580", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85173778", "label": "Q85173778", "shape": "dot", "size": 10, "value": 5}, {"id": "\u0420\u0430\u0441\u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0435\u043d\u0438\u0435 COVID-19 \u0432 \u0412\u0435\u043d\u0433\u0440\u0438\u0438", "label": "\u0420\u0430\u0441\u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0435\u043d\u0438\u0435 COVID-19 \u0432 \u0412\u0435\u043d\u0433\u0440\u0438\u0438", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86675924", "label": "Q86675924", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83493517", "label": "Q83493517", "shape": "dot", "size": 10, "value": 5}, {"id": "\u0420\u0430\u0441\u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0435\u043d\u0438\u0435 COVID-19 \u0432 \u0413\u0440\u0435\u0446\u0438\u0438", "label": "\u0420\u0430\u0441\u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0435\u043d\u0438\u0435 COVID-19 \u0432 \u0413\u0440\u0435\u0446\u0438\u0438", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87755912", "label": "Q87755912", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84081576", "label": "Q84081576", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87250732", "label": "Q87250732", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873057", "label": "Q83873057", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87235137", "label": "Q87235137", "shape": "dot", "size": 10, "value": 5}, {"id": "Q98270627", "label": "Q98270627", "shape": "dot", "size": 10, "value": 5}, {"id": "Q98947046", "label": "Q98947046", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83347039", "label": "Q83347039", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85736322", "label": "Q85736322", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88672384", "label": "Q88672384", "shape": "dot", "size": 10, "value": 5}, {"id": "Q89210146", "label": "Q89210146", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88785718", "label": "Q88785718", "shape": "dot", "size": 10, "value": 5}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q87186117", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q87235177", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q84055415", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q86919406", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q84104992", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q84055514", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q83872398", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q84166704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q83873577", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q86756826", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q87250788", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q83873593", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q87651995", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q86597695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87186117", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87235177", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84167106", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84055415", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86919406", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84104992", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87719492", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84055514", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q97660562", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872398", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84166704", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84446340", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87902950", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1385195", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873548", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84098939", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873577", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86756826", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87887813", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873580", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85173778", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85173778", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83889294", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u0420\u0430\u0441\u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0435\u043d\u0438\u0435 COVID-19 \u0432 \u0412\u0435\u043d\u0433\u0440\u0438\u0438", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86675924", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250788", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873593", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83493517", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87651995", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u0420\u0430\u0441\u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0435\u043d\u0438\u0435 COVID-19 \u0432 \u0413\u0440\u0435\u0446\u0438\u0438", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87755912", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84081576", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87250732", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873057", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86597695", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87235137", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q98270627", "to": "Q84098939", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q98947046", "to": "Q84098939", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83347039", "to": "Q84098939", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85736322", "to": "Q84098939", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88672384", "to": "Q84098939", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q89210146", "to": "Q84098939", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88785718", "to": "Q84098939", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

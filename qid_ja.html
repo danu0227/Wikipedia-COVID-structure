@@ -1,0 +1,120 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#dd4b39", "id": "Q82069695", "label": "Q82069695", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q81068910", "label": "Q81068910", "shape": "dot", "size": 10, "value": 5}, {"color": "#dd4b39", "id": "Q84263196", "label": "Q84263196", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83741704", "label": "Q83741704", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85872065", "label": "Q85872065", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83872271", "label": "Q83872271", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84167106", "label": "Q84167106", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84104992", "label": "Q84104992", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84166704", "label": "Q84166704", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873577", "label": "Q83873577", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873593", "label": "Q83873593", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85876114", "label": "Q85876114", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83872398", "label": "Q83872398", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84081307", "label": "Q84081307", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83889294", "label": "Q83889294", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84146057", "label": "Q84146057", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873566", "label": "Q83873566", "shape": "dot", "size": 10, "value": 5}, {"id": "Q736798", "label": "Q736798", "shape": "dot", "size": 10, "value": 5}, {"id": "Q30314010", "label": "Q30314010", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88027839", "label": "Q88027839", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86452405", "label": "Q86452405", "shape": "dot", "size": 10, "value": 5}, {"id": "Q90258006", "label": "Q90258006", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87866152", "label": "Q87866152", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86901049", "label": "Q86901049", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86521237", "label": "Q86521237", "shape": "dot", "size": 10, "value": 5}, {"id": ":w:List of deaths from the 2019\u201320 coronavirus pandemic", "label": ":w:List of deaths from the 2019\u201320 coronavirus pandemic", "shape": "dot", "size": 10, "value": 5}, {"id": "Q181278", "label": "Q181278", "shape": "dot", "size": 10, "value": 5}, {"id": "Q21018914", "label": "Q21018914", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87406428", "label": "Q87406428", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86458103", "label": "Q86458103", "shape": "dot", "size": 10, "value": 5}, {"id": "Q84590527", "label": "Q84590527", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83872291", "label": "Q83872291", "shape": "dot", "size": 10, "value": 5}, {"id": "Q88650827", "label": "Q88650827", "shape": "dot", "size": 10, "value": 5}, {"id": "Q87589400", "label": "Q87589400", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86732769", "label": "Q86732769", "shape": "dot", "size": 10, "value": 5}, {"id": "Q15882575", "label": "Q15882575", "shape": "dot", "size": 10, "value": 5}, {"id": "Cordon sanitaire", "label": "Cordon sanitaire", "shape": "dot", "size": 10, "value": 5}, {"id": "Q97310985", "label": "Q97310985", "shape": "dot", "size": 10, "value": 5}, {"id": "Q382646", "label": "Q382646", "shape": "dot", "size": 10, "value": 5}, {"id": "\u514d\u75ab\u306e\u4eba\u70ba\u7684\u8a98\u5c0e", "label": "\u514d\u75ab\u306e\u4eba\u70ba\u7684\u8a98\u5c0e", "shape": "dot", "size": 10, "value": 5}, {"id": "Q11187147", "label": "Q11187147", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86694873", "label": "Q86694873", "shape": "dot", "size": 10, "value": 5}, {"id": "Q192995", "label": "Q192995", "shape": "dot", "size": 10, "value": 5}, {"id": "Q134808", "label": "Q134808", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86694210", "label": "Q86694210", "shape": "dot", "size": 10, "value": 5}, {"id": "Q60740358", "label": "Q60740358", "shape": "dot", "size": 10, "value": 5}, {"id": "Q218168", "label": "Q218168", "shape": "dot", "size": 10, "value": 5}, {"id": "Q56641686", "label": "Q56641686", "shape": "dot", "size": 10, "value": 5}, {"id": "\u9632\u75ab\u7dda", "label": "\u9632\u75ab\u7dda", "shape": "dot", "size": 10, "value": 5}, {"id": "Mathematical modelling of infectious disease", "label": "Mathematical modelling of infectious disease", "shape": "dot", "size": 10, "value": 5}, {"id": "\u611f\u67d3\u75c7\u306e\u6570\u7406\u30e2\u30c7\u30eb", "label": "\u611f\u67d3\u75c7\u306e\u6570\u7406\u30e2\u30c7\u30eb", "shape": "dot", "size": 10, "value": 5}, {"id": "Artificial induction of immunity", "label": "Artificial induction of immunity", "shape": "dot", "size": 10, "value": 5}, {"id": "Q13606208", "label": "Q13606208", "shape": "dot", "size": 10, "value": 5}, {"id": "Q182899", "label": "Q182899", "shape": "dot", "size": 10, "value": 5}, {"id": "\u4e88\u9632\u9694\u96e2", "label": "\u4e88\u9632\u9694\u96e2", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4548451", "label": "Q4548451", "shape": "dot", "size": 10, "value": 5}, {"id": "Protective sequestration", "label": "Protective sequestration", "shape": "dot", "size": 10, "value": 5}, {"id": "Q55602674", "label": "Q55602674", "shape": "dot", "size": 10, "value": 5}, {"id": "en:2020 coronavirus pandemic in New Zealand", "label": "en:2020 coronavirus pandemic in New Zealand", "shape": "dot", "size": 10, "value": 5}, {"id": "Q4803689", "label": "Q4803689", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85883043", "label": "Q85883043", "shape": "dot", "size": 10, "value": 5}, {"id": "Q11346511", "label": "Q11346511", "shape": "dot", "size": 10, "value": 5}, {"id": "Q85872060", "label": "Q85872060", "shape": "dot", "size": 10, "value": 5}, {"id": "\u30d6\u30e9\u30b8\u30eb\u306b\u304a\u3051\u308b2019\u5e74\u30b3\u30ed\u30ca\u30a6\u30a4\u30eb\u30b9\u611f\u67d3\u75c7\u306e\u6d41\u884c\u72b6\u6cc1", "label": "\u30d6\u30e9\u30b8\u30eb\u306b\u304a\u3051\u308b2019\u5e74\u30b3\u30ed\u30ca\u30a6\u30a4\u30eb\u30b9\u611f\u67d3\u75c7\u306e\u6d41\u884c\u72b6\u6cc1", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3271950", "label": "Q3271950", "shape": "dot", "size": 10, "value": 5}, {"id": "Q86675924", "label": "Q86675924", "shape": "dot", "size": 10, "value": 5}, {"id": "Q83873057", "label": "Q83873057", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1193162", "label": "Q1193162", "shape": "dot", "size": 10, "value": 5}, {"id": "\u6301\u7d9a\u5316\u7d66\u4ed8\u91d1", "label": "\u6301\u7d9a\u5316\u7d66\u4ed8\u91d1", "shape": "dot", "size": 10, "value": 5}, {"id": "Q95573101", "label": "Q95573101", "shape": "dot", "size": 10, "value": 5}, {"id": "Q97177023", "label": "Q97177023", "shape": "dot", "size": 10, "value": 5}, {"id": "Q11404694", "label": "Q11404694", "shape": "dot", "size": 10, "value": 5}, {"id": "Q3560939", "label": "Q3560939", "shape": "dot", "size": 10, "value": 5}, {"id": "Q1810913", "label": "Q1810913", "shape": "dot", "size": 10, "value": 5}, {"id": "Q11397945", "label": "Q11397945", "shape": "dot", "size": 10, "value": 5}, {"id": "MMR\u30ef\u30af\u30c1\u30f3\u3068\u81ea\u9589\u75c7", "label": "MMR\u30ef\u30af\u30c1\u30f3\u3068\u81ea\u9589\u75c7", "shape": "dot", "size": 10, "value": 5}, {"id": "\u30ef\u30af\u30c1\u30f3\u3068\u81ea\u9589\u75c7", "label": "\u30ef\u30af\u30c1\u30f3\u3068\u81ea\u9589\u75c7", "shape": "dot", "size": 10, "value": 5}, {"id": "MMR vaccine and autism", "label": "MMR vaccine and autism", "shape": "dot", "size": 10, "value": 5}, {"id": "Vaccines and autism", "label": "Vaccines and autism", "shape": "dot", "size": 10, "value": 5}, {"id": "\u4e88\u9632\u63a5\u7a2e\u653f\u7b56", "label": "\u4e88\u9632\u63a5\u7a2e\u653f\u7b56", "shape": "dot", "size": 10, "value": 5}, {"id": "\u4e88\u9632\u63a5\u7a2e\u3068\u5b97\u6559", "label": "\u4e88\u9632\u63a5\u7a2e\u3068\u5b97\u6559", "shape": "dot", "size": 10, "value": 5}, {"id": "Q22130047", "label": "Q22130047", "shape": "dot", "size": 10, "value": 5}, {"id": "Vaccination policy", "label": "Vaccination policy", "shape": "dot", "size": 10, "value": 5}, {"id": "\u30c1\u30e1\u30ed\u30b5\u30fc\u30eb\u3068\u30ef\u30af\u30c1\u30f3", "label": "\u30c1\u30e1\u30ed\u30b5\u30fc\u30eb\u3068\u30ef\u30af\u30c1\u30f3", "shape": "dot", "size": 10, "value": 5}, {"id": "Thiomersal and vaccines", "label": "Thiomersal and vaccines", "shape": "dot", "size": 10, "value": 5}, {"id": "Vaccination and religion", "label": "Vaccination and religion", "shape": "dot", "size": 10, "value": 5}, {"id": "Q20044187", "label": "Q20044187", "shape": "dot", "size": 10, "value": 5}, {"id": "\u5f8c\u6bb5\u306e\u300eWHO\u3068\u53f0\u6e7e\u653f\u5e9c\u306e\u653b\u9632\u300f\u7bc0", "label": "\u5f8c\u6bb5\u306e\u300eWHO\u3068\u53f0\u6e7e\u653f\u5e9c\u306e\u653b\u9632\u300f\u7bc0", "shape": "dot", "size": 10, "value": 5}, {"id": "", "label": "", "shape": "dot", "size": 10, "value": 5}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "red", "from": "Q82069695", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84263196", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q81068910", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83872271", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q84167106", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q84104992", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q84166704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83873577", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83873593", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q85876114", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83872398", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q84081307", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83889294", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q84146057", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872065", "to": "Q83873566", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q736798", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q30314010", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88027839", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86452405", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q90258006", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83741704", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872271", "to": "Q82069695", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872271", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872271", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872271", "to": "Q86901049", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872271", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87866152", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87866152", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": ":w:List of deaths from the 2019\u201320 coronavirus pandemic", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q181278", "to": "Q81068910", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86901049", "to": "Q84263196", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q21018914", "to": "Q181278", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84167106", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84167106", "to": "Q86901049", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84167106", "to": "Q87406428", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84167106", "to": "Q86458103", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84590527", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84590527", "to": "Q83873577", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84590527", "to": "Q83872291", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84590527", "to": "Q88650827", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87589400", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87589400", "to": "Q86732769", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86521237", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q15882575", "to": "Q181278", "weight": 1}, {"arrows": "to", "color": "red", "from": "Cordon sanitaire", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q97310985", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q87406428", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84104992", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84104992", "to": "Q86458103", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q382646", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86458103", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u514d\u75ab\u306e\u4eba\u70ba\u7684\u8a98\u5c0e", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q11187147", "to": "Q181278", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84166704", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84166704", "to": "Q86458103", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84166704", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q192995", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q134808", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873577", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873577", "to": "Q86901049", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873577", "to": "Q87406428", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873577", "to": "Q86694210", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q60740358", "to": "Q181278", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86694873", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86694873", "to": "Q84590527", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86732769", "to": "Q85872065", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86732769", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86732769", "to": "Q83872291", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q218168", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q218168", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q218168", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u9632\u75ab\u7dda", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Mathematical modelling of infectious disease", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u611f\u67d3\u75c7\u306e\u6570\u7406\u30e2\u30c7\u30eb", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Artificial induction of immunity", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13606208", "to": "Q736798", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13606208", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q13606208", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q182899", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873593", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873593", "to": "Q87406428", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873593", "to": "Q86458103", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873593", "to": "Q86694873", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873593", "to": "Q86694210", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872291", "to": "Q86901049", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872291", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u4e88\u9632\u9694\u96e2", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q4548451", "to": "Q181278", "weight": 1}, {"arrows": "to", "color": "red", "from": "Protective sequestration", "to": "Q30314010", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86694210", "to": "Q83741704", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q55602674", "to": "Q181278", "weight": 1}, {"arrows": "to", "color": "red", "from": "en:2020 coronavirus pandemic in New Zealand", "to": "Q87866152", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q4803689", "to": "Q181278", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85876114", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83872398", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85883043", "to": "Q86732769", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q11346511", "to": "Q83872291", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84081307", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q85872060", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u30d6\u30e9\u30b8\u30eb\u306b\u304a\u3051\u308b2019\u5e74\u30b3\u30ed\u30ca\u30a6\u30a4\u30eb\u30b9\u611f\u67d3\u75c7\u306e\u6d41\u884c\u72b6\u6cc1", "to": "Q87406428", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3271950", "to": "Q11187147", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83889294", "to": "Q86458103", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q86675924", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873057", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1193162", "to": "Q86732769", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u6301\u7d9a\u5316\u7d66\u4ed8\u91d1", "to": "Q86732769", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q95573101", "to": "Q86732769", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q84146057", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q88650827", "to": "Q83872291", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q97177023", "to": "Q86732769", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q11404694", "to": "Q192995", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q3560939", "to": "Q134808", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q1810913", "to": "Q134808", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q56641686", "to": "Q134808", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q83873566", "to": "Q86521237", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q11397945", "to": "Q134808", "weight": 1}, {"arrows": "to", "color": "red", "from": "MMR\u30ef\u30af\u30c1\u30f3\u3068\u81ea\u9589\u75c7", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u30ef\u30af\u30c1\u30f3\u3068\u81ea\u9589\u75c7", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "MMR vaccine and autism", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "Vaccines and autism", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u4e88\u9632\u63a5\u7a2e\u653f\u7b56", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u4e88\u9632\u63a5\u7a2e\u3068\u5b97\u6559", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q22130047", "to": "Q3271950", "weight": 1}, {"arrows": "to", "color": "red", "from": "Vaccination policy", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u30c1\u30e1\u30ed\u30b5\u30fc\u30eb\u3068\u30ef\u30af\u30c1\u30f3", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "Thiomersal and vaccines", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "Vaccination and religion", "to": "Q56641686", "weight": 1}, {"arrows": "to", "color": "red", "from": "Q20044187", "to": "Q3271950", "weight": 1}, {"arrows": "to", "color": "red", "from": "\u5f8c\u6bb5\u306e\u300eWHO\u3068\u53f0\u6e7e\u653f\u5e9c\u306e\u653b\u9632\u300f\u7bc0", "to": "Q84081307", "weight": 1}, {"arrows": "to", "color": "red", "from": "", "to": "Q84081307", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
