@@ -35,7 +35,7 @@ Read adjacency list in Json file format and visualize network graph using networ
 Example) English Wikipedia COVID-structure
 
 
-![Network graph example](./Results/Networks/network_example.png) {:width = 80%}
+![Network graph example](./Results/Networks/network_example.png){:width = 80%}
 
 
 ### Count the articles containing keyword
