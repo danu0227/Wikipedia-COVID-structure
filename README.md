@@ -1,0 +1,1 @@
+# Wikipedia-COVID-structure
