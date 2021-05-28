@@ -36,6 +36,7 @@ Example) English Wikipedia COVID-structure
 
 
 ![Network graph example](./Results/Networks/network_example.png){:width = 80%}
+<p align="center"><img src="./Results/Networks/network_example.png" width="80%"></p>
 
 
 ### Count the articles containing keyword
