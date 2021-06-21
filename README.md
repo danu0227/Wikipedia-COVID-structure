@@ -34,6 +34,10 @@ Read adjacency list in Json file format and visualize network graph using networ
 
 Example) English Wikipedia COVID-structure
 
+<p align="center"><img src="./Results/Networks/network_example.png" width="80%"></p>
+
+
+
 #### Interactive Visualizations
 [English](https://danu0227.github.io/Wikipedia-COVID-structure/Results/Networks/qid_en_5.html)
 [Spanish](https://danu0227.github.io/Wikipedia-COVID-structure/Results/Networks/qid_es_5.html)
@@ -45,10 +49,6 @@ Example) English Wikipedia COVID-structure
 [Russian](https://danu0227.github.io/Wikipedia-COVID-structure/Results/Networks/qid_ru_5.html)
 [Korean](https://danu0227.github.io/Wikipedia-COVID-structure/Results/Networks/qid_ko_5.html)
 [Japanese](https://danu0227.github.io/Wikipedia-COVID-structure/Results/Networks/qid_ja_5.html)
-
-
-<p align="center"><img src="./Results/Networks/network_example.png" width="80%"></p>
-
 
 ### Count the articles containing keyword
 #### Count_keyword.ipynb
